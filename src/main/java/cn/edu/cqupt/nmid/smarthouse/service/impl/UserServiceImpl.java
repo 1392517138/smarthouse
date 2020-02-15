@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.util.List;
 
 /**
  * @author piwenjing
@@ -86,5 +87,6 @@ public class UserServiceImpl implements UserService {
     public void modPhone(String phone, String email) {
         userDao.modPhone(phone, email);
     }
+
 
 }

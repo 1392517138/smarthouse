@@ -16,11 +16,11 @@ public interface FamilyDao {
      * 1.
      * 获取家人列表
      *
-     * @param user
+     * @param email
      * @return
      */
-    @Select("select family from user where email=#{user.email}")
-    String getFamilyList(@Param("user") User user);
+    @Select("select family from user where email=#{email}")
+    String getFamilyList(String email);
 
     /**
      * 2.

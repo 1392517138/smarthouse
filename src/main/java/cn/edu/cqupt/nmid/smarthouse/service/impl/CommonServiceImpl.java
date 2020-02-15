@@ -46,11 +46,11 @@ public class CommonServiceImpl implements CommonService {
         //身高、体重、血压、血氧、心率、测量次数分别添加上时间
         userInfo.setHeight(userInfo.getHeight() + ":" + ft.format(date) + ";");
         userInfo.setWeight(userInfo.getWeight() + ":" + ft.format(date) + ";");
-        userInfo.setBTemperature(userInfo.getBTemperature() + ":" + ft2.format(date) + ";");
-        userInfo.setBSugar(userInfo.getBSugar() + ":" + ft2.format(date) + ";");
-        userInfo.setBOxygen(userInfo.getBOxygen() + ":" + ft2.format(date) + ";");
-        userInfo.setHRate(userInfo.getHRate() + ":" + ft2.format(date) + ";");
-        userInfo.setNMeasure((String.valueOf(userInfo.getNMeasure()) + 1) + ":" + ft2.format(date) + ";");
+        userInfo.setBtemperature(userInfo.getBtemperature() + ":" + ft2.format(date) + ";");
+        userInfo.setBsugar(userInfo.getBsugar() + ":" + ft2.format(date) + ";");
+        userInfo.setBoxygen(userInfo.getBoxygen() + ":" + ft2.format(date) + ";");
+        userInfo.setHrate(userInfo.getHrate() + ":" + ft2.format(date) + ";");
+        userInfo.setNmeasure((String.valueOf(userInfo.getNmeasure()) + 1) + ":" + ft2.format(date) + ";");
 
         commonDao.updateInfo(userInfo, email);
     }

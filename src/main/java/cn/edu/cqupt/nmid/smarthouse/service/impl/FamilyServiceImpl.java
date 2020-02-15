@@ -5,6 +5,7 @@ import cn.edu.cqupt.nmid.smarthouse.dao.FamilyDao;
 import cn.edu.cqupt.nmid.smarthouse.pojo.User;
 import cn.edu.cqupt.nmid.smarthouse.pojo.UserInfo;
 import cn.edu.cqupt.nmid.smarthouse.service.FamilyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,10 +26,27 @@ public class FamilyServiceImpl implements FamilyService {
     @Resource
     private CommonDao commonDao;
 
+    @Autowired
+
+
     @Override
     public List<User> getFamily(User user) {
+        String[] familylis = this.getList(user.getEmail());
+        List<User> family = new LinkedList<>();
+        try {
+            //3.查询出的单个user添加进list
+            for (String familyli : familylis) {
+                family.add(familyDao.getFamilyUser(familyli));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return family;
+    }
+
+    private String[] getList(String email) {
         //1.获取家人列表
-        String list = familyDao.getFamilyList(user);
+        String list = familyDao.getFamilyList(email);
         String[] familylis = null;
         //2.分割list
         if (list != null) {
@@ -36,13 +54,9 @@ public class FamilyServiceImpl implements FamilyService {
         } else {
             return null;
         }
-        List<User> family = new LinkedList<>();
-        //3.查询出的单个user添加进list
-        for (String familyli : familylis) {
-            family.add(familyDao.getFamilyUser(familyli));
-        }
-        return family;
+        return familylis;
     }
+
 
     @Override
     public UserInfo getFamilyUserInfo(String email) {
@@ -78,6 +92,12 @@ public class FamilyServiceImpl implements FamilyService {
     @Transactional
     public void delFamily(User user, String email) {
         familyDao.delFamily(user, email + ";");
+    }
+
+    @Override
+    public void sendFamilies(String email) {
+        String[] list = this.getList(email);
+        这里发送信息
     }
 
 

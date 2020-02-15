@@ -74,7 +74,7 @@ public class ContactController {
      */
     @PostMapping("/contact/updateInfo")
     @ApiOperation("更新用户测得的信息")
-    public String updateInfo(@ApiParam("用户测得得信息") @RequestParam("userInfo") UserInfo userInfo, @ApiParam @RequestParam("JSESSIONID") String JSESSIONID) {
+    public String updateInfo(@ApiParam("用户测得得信息") @RequestBody UserInfo userInfo, @ApiParam @RequestParam("JSESSIONID") String JSESSIONID) {
         JSONObject returnData = new JSONObject();
         int status = 200;
         User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");

@@ -70,4 +70,11 @@ public interface FamilyService {
      * @param email
      */
     void delFamily(User user, String email);
+
+    /**
+     * 给家人发邮件
+     *
+     * @param email
+     */
+    void sendFamilies(String email);
 }

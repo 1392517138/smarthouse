@@ -22,8 +22,8 @@ public interface CommonDao {
      * @param email
      * @return
      */
-    @Select("select temperature,moisture,height,weight,b_Temperature,b_Sugar,b_Oxygen,h_Rate," +
-            "n_Measure from user_info where email=#{email}")
+    @Select("select temperature,moisture,height,weight,btemperature,bsugar,boxygen,hrate," +
+            "nmeasure from userinfo where email=#{email}")
     UserInfo getInfo(String email);
 
     /**
@@ -32,9 +32,9 @@ public interface CommonDao {
      * @param userInfo
      */
     @Update("update user_info set temperature=concat(temperature,#{userInfo.temperature}),moisture=concat(moisture,#{userInfo.moisture})," +
-            "height=concat(height,#{userInfo.height}),weight=concat(weight,#{userInfo.weight}),b_Temperature=concat(b_Temperature,#{userInfo.bTemperature})," +
-            "b_Pressure=concat(b_Sugar,#{userInfo.bSugar}),b_Oxygen=concat(b_Oxygen,#{userInfo.bOxygen})," +
-            "h_Rate=concat(h_Rate,#{userInfo.hRate}),n_Measure=concat(n_Measure,#{userInfo.nMeasure}) where email=#{email}")
+            "height=concat(height,#{userInfo.height}),weight=concat(weight,#{userInfo.weight}),btemperature=concat(btemperature,#{userInfo.btemperature})," +
+            "bpressure=concat(bsugar,#{userInfo.bsugar}),boxygen=concat(boxygen,#{userInfo.boxygen})," +
+            "hrate=concat(hrate,#{userInfo.hrate}),nmeasure=concat(nmeasure,#{userInfo.nmeasure}) where email=#{email}")
     void updateInfo(@Param("userInfo") UserInfo userInfo, @Param("email") String email);
 
 

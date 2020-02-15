@@ -11,7 +11,7 @@ import lombok.Data;
  * @description 用户基本信息
  * @date 2020/1/10 2:10 PM
  */
-@ApiModel(description = "用户实体")
+@ApiModel("用户实体")
 @Data
 @AllArgsConstructor
 public class User {
