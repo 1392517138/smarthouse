@@ -46,4 +46,12 @@ public interface UserService {
      */
     Boolean ifExit(String email);
 
+    /**
+     * 修改生日、 性别、 电话
+     */
+    void modBorth(String borth, String email);
+
+    void modSex(String sex, String email);
+
+    void modPhone(String phone, String email);
 }

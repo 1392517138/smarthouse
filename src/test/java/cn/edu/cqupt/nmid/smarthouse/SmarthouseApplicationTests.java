@@ -38,6 +38,7 @@ class SmarthouseApplicationTests {
      *                      UserController 测试
      *********************************************************************
      */
+
     @Test
     public void registTest() {
         userService.register(new User("131313", "111@qq.com", "1",

@@ -47,4 +47,17 @@ public interface UserDao {
 
     @Select("select email from user where email=#{email}")
     String ifExit(String email);
+
+
+    /**
+     * 修改 生日、 性别、 电话
+     */
+    @Update("update user set borth=#{borth} where email=#{email}")
+    void modBorth(String borth, String email);
+
+    @Update("update user set sex=#{sex} where email=#{email}")
+    void modSex(String sex, String email);
+
+    @Update("update user set phone=#{phone} where email=#{email}")
+    void modPhone(String phone, String email);
 }

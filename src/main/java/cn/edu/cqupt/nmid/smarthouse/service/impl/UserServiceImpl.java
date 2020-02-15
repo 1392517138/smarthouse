@@ -72,4 +72,19 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public void modBorth(String borth, String email) {
+        userDao.modBorth(borth, email);
+    }
+
+    @Override
+    public void modSex(String sex, String email) {
+        userDao.modSex(sex, email);
+    }
+
+    @Override
+    public void modPhone(String phone, String email) {
+        userDao.modPhone(phone, email);
+    }
+
 }

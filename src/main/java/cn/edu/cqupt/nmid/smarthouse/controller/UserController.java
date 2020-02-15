@@ -173,7 +173,7 @@ public class UserController {
     }
 
     /**
-     * @Description:修改用户名称、 密码 、 头像
+     * @Description:修改用户名称、 密码 、 头像、 生日、 性别、 电话
      * @Param [nickname, JSESSIONID]
      * @Date: 6:11 PM 2020/1/11
      */
@@ -220,6 +220,54 @@ public class UserController {
             User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
             userService.modHead(user, photo, "/data/upload");
             userService.modNickname(user);
+        } catch (Exception e) {
+            status = 400;
+            e.printStackTrace();
+        }
+        returnData.put("status", status);
+        return returnData.toJSONString();
+    }
+
+    @ApiOperation("修改生日")
+    @GetMapping("/modBorth")
+    public String modBorth(@RequestParam String borth, @RequestParam String JSESSIONID) {
+        JSONObject returnData = new JSONObject();
+        int status = 200;
+        try {
+            User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
+            userService.modBorth(borth, user.getEmail());
+        } catch (Exception e) {
+            status = 400;
+            e.printStackTrace();
+        }
+        returnData.put("status", status);
+        return returnData.toJSONString();
+    }
+
+    @ApiOperation("修改性别")
+    @GetMapping("/modSex")
+    public String modSex(@RequestParam String sex, @RequestParam String JSESSIONID) {
+        JSONObject returnData = new JSONObject();
+        int status = 200;
+        try {
+            User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
+            userService.modSex(sex, user.getEmail());
+        } catch (Exception e) {
+            status = 400;
+            e.printStackTrace();
+        }
+        returnData.put("status", status);
+        return returnData.toJSONString();
+    }
+
+    @ApiOperation("修改电话")
+    @GetMapping("/modPhone")
+    public String modPhone(@RequestParam String phone, @RequestParam String JSESSIONID) {
+        JSONObject returnData = new JSONObject();
+        int status = 200;
+        try {
+            User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
+            userService.modPhone(phone, user.getEmail());
         } catch (Exception e) {
             status = 400;
             e.printStackTrace();
