@@ -1,0 +1,72 @@
+
+#日志设置
+logging:
+  level:
+    cn.edu.cqupt.nmid.smarthouse.controller: debug
+  pattern:
+    console: "%d{HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} ** [%thread] ** %-5level ** %logger{50}** %msg%n"
+
+##开启驼峰命名
+#mybatis:
+#  configuration:
+#    mapUnderscoreToCamelCase: true
+
+#Druid连接池,与rabbitmq
+spring:
+#  rabbitmq:
+#    host: 127.0.0.1
+#    port: 5672
+#    username: guest
+#    password: guest
+#    virtualHost: /
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/smarthouse?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    platform: mysql
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 25
+    filters: stat,wall,slf4j
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+#设置邮箱
+  mail:
+    host: smtp.qq.com
+    title: 居家护理咨询与体征监测平台
+    username: 2295268364@qq.com
+    password: lrvdzgvzlzzlecag
+    port: 587
+    properties:
+      smtp:
+        ssl:
+          enable: true
+
+server:
+  tomcat:
+    accesslog:
+      encoding: UTF-8
+    uri-encoding: UTF-8
+
+#smarthouse:
+#  mq:
+#    routingKey: email
