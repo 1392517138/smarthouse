@@ -3,6 +3,7 @@ package cn.edu.cqupt.nmid.smarthouse.controller;
 import cn.edu.cqupt.nmid.smarthouse.pojo.User;
 import cn.edu.cqupt.nmid.smarthouse.service.UserService;
 import cn.edu.cqupt.nmid.smarthouse.service.mail.MailService;
+import cn.edu.cqupt.nmid.smarthouse.service.sms.SmsService;
 import cn.edu.cqupt.nmid.smarthouse.util.CheckCode;
 import cn.edu.cqupt.nmid.smarthouse.util.LoginSessionContext;
 import cn.edu.cqupt.nmid.smarthouse.util.RegistSessionContext;
@@ -29,7 +30,7 @@ public class UserController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private MailService mailService;
+    private SmsService smsService;
     @Autowired
     private RegistSessionContext registSessionContext;
     @Autowired
@@ -50,15 +51,15 @@ public class UserController {
      * @Param: * @param null
      * @Date: 6:00 PM 2020/1/10
      */
-    @ApiOperation("发送邮箱验证码")
+    @ApiOperation("发送短信验证码")
     @PostMapping("/register/sendCheckCode")
-    public String Register(@RequestParam("email") String email, HttpSession session) throws Exception {
+    public String Register(@RequestParam("phone") String phone, HttpSession session) throws Exception {
         JSONObject returnData = new JSONObject();
         int status = 200;
         try {
             String checkCode = CheckCode.getCheckCode(5);
 
-            mailService.sendMail(new String[]{email}, "您好，您的验证码是： " + checkCode);
+            smsService.sendSms(phone, checkCode);
             session.setMaxInactiveInterval(600);
             session.setAttribute("checkCode", checkCode);
 
@@ -75,7 +76,7 @@ public class UserController {
     }
 
     /**
-     * @Description:当点击提交当时候，检查验证码，通过即注册成功,且email为unique可判断是否已经注册
+     * @Description:当点击提交当时候，检查验证码，通过即注册成功,且phone为unique可判断是否已经注册
      * @Param: * @param null
      * @Date: 6:02 PM 2020/1/10
      */
@@ -83,7 +84,6 @@ public class UserController {
     @GetMapping("/register/checkCode")
     public String checkCode(@RequestParam("checkCode") String checkCode,
                             @RequestParam("JSESSIONID") String JSESSIONID,
-                            @RequestParam("email") String email,
                             @RequestParam("pwd") String pwd,
                             @RequestParam("phone") String phone,
                             @RequestParam("nickname") String nickname,
@@ -97,7 +97,7 @@ public class UserController {
             String value = ((String) session.getAttribute("checkCode")).toLowerCase();
             if (value.equals(checkCode.toLowerCase())) {
 
-                userService.register(new User(phone, email, pwd, nickname, borth, sex, "default.jpg", "", 0));
+                userService.register(new User(phone, pwd, nickname, borth, sex, "default.jpg", ""));
             }
         } catch (Exception e) {
             status = 400;
@@ -111,19 +111,19 @@ public class UserController {
 
     /**
      * @Description:用户登陆
-     * @Param [email, pwd, session]
+     * @Param [phone, pwd, session]
      * @Date: 11:18 AM 2020/1/11
      */
     @ApiOperation("用户登陆")
     @PostMapping("/login")
-    public String Login(@RequestParam("email") String email, @RequestParam("pwd") String pwd, HttpSession session) {
+    public String Login(@RequestParam("phone") String phone, @RequestParam("pwd") String pwd, HttpSession session) {
         JSONObject returnData = new JSONObject();
         int status = 200;
         User user = null;
         try {
-            Boolean p = userService.ifExit(email);
+            Boolean p = userService.ifExit(phone);
             if (p) {
-                user = userService.login(email, pwd);
+                user = userService.login(phone, pwd);
                 if (user != null) {
                     logger.info(user + "------------");
                     session.setAttribute("user", user);
@@ -235,7 +235,7 @@ public class UserController {
         int status = 200;
         try {
             User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
-            userService.modBorth(borth, user.getEmail());
+            userService.modBorth(borth, user.getPhone());
         } catch (Exception e) {
             status = 400;
             e.printStackTrace();
@@ -251,7 +251,7 @@ public class UserController {
         int status = 200;
         try {
             User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
-            userService.modSex(sex, user.getEmail());
+            userService.modSex(sex, user.getPhone());
         } catch (Exception e) {
             status = 400;
             e.printStackTrace();
@@ -267,7 +267,7 @@ public class UserController {
         int status = 200;
         try {
             User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
-            userService.modPhone(phone, user.getEmail());
+            userService.modPhone(phone, user.getPhone());
         } catch (Exception e) {
             status = 400;
             e.printStackTrace();

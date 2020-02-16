@@ -32,8 +32,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(String email, String pwd) {
-        return userDao.login(email, pwd);
+    public User login(String phone, String pwd) {
+        return userDao.login(phone, pwd);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     public void modHead(User user, MultipartFile photo, String savepath) throws Exception {
         String name = photo.getOriginalFilename();
         String phototype = name.substring(name.lastIndexOf("."));
-        String filename = user.getEmail() + phototype;
+        String filename = user.getPhone() + phototype;
         File file = new File(savepath);
         if (!file.exists()) {
             file.mkdirs();
@@ -64,8 +64,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean ifExit(String email) {
-        if (userDao.ifExit(email) == null) {
+    public Boolean ifExit(String phone) {
+        if (userDao.ifExit(phone) == null) {
             return false;
         } else {
             return true;
@@ -74,18 +74,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void modBorth(String borth, String email) {
-        userDao.modBorth(borth, email);
+    public void modBorth(String borth, String phone) {
+        userDao.modBorth(borth, phone);
     }
 
     @Override
-    public void modSex(String sex, String email) {
-        userDao.modSex(sex, email);
+    public void modSex(String sex, String phone) {
+        userDao.modSex(sex, phone);
     }
 
     @Override
-    public void modPhone(String phone, String email) {
-        userDao.modPhone(phone, email);
+    public void modPhone(String phone1, String phone2) {
+        userDao.modPhone(phone1, phone2);
     }
 
 

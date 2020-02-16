@@ -19,12 +19,12 @@ public interface CommonDao {
     /**
      * 获取用户测得得信息
      *
-     * @param email
+     * @param phone
      * @return
      */
     @Select("select temperature,moisture,height,weight,btemperature,bsugar,boxygen,hrate," +
-            "nmeasure from userinfo where email=#{email}")
-    UserInfo getInfo(String email);
+            "nmeasure from userinfo where phone=#{phone}")
+    UserInfo getInfo(String phone);
 
     /**
      * 更新用户测得的数据
@@ -34,8 +34,8 @@ public interface CommonDao {
     @Update("update user_info set temperature=concat(temperature,#{userInfo.temperature}),moisture=concat(moisture,#{userInfo.moisture})," +
             "height=concat(height,#{userInfo.height}),weight=concat(weight,#{userInfo.weight}),btemperature=concat(btemperature,#{userInfo.btemperature})," +
             "bpressure=concat(bsugar,#{userInfo.bsugar}),boxygen=concat(boxygen,#{userInfo.boxygen})," +
-            "hrate=concat(hrate,#{userInfo.hrate}),nmeasure=concat(nmeasure,#{userInfo.nmeasure}) where email=#{email}")
-    void updateInfo(@Param("userInfo") UserInfo userInfo, @Param("email") String email);
+            "hrate=concat(hrate,#{userInfo.hrate}),nmeasure=concat(nmeasure,#{userInfo.nmeasure}) where phone=#{phone}")
+    void updateInfo(@Param("userInfo") UserInfo userInfo, @Param("phone") String phone);
 
 
 }

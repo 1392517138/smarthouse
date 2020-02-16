@@ -18,7 +18,7 @@ public interface PlanDao {
 
 //    void addPlan(String time, String thing);
 
-//    List<Plan> getPlans(String email);
+//    List<Plan> getPlans(String phone);
 
 //    void delPlan(int id);
 
@@ -29,19 +29,19 @@ public interface PlanDao {
      *
      * @param time
      * @param thing
-     * @param email
+     * @param phone
      */
-    @Insert("insert into plan (email,time,thing) values(#{email},#{time},#{thing})")
-    void addPlan(@Param("time") String time, @Param("thing") String thing, @Param("email") String email);
+    @Insert("insert into plan (phone,time,thing) values(#{phone},#{time},#{thing})")
+    void addPlan(@Param("time") String time, @Param("thing") String thing, @Param("phone") String phone);
 
     /**
      * 得到该用户所有计划
      *
-     * @param email
+     * @param phone
      * @return
      */
-    @Select("select * from plan where email=#{email}")
-    List<Plan> getPlans(String email);
+    @Select("select * from plan where phone=#{phone}")
+    List<Plan> getPlans(String phone);
 
     /**
      * 删除该任务

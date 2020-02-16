@@ -27,8 +27,8 @@ public interface KnowledgeDao {
     /**
      * 用户答对问题，增加答对答题数(qnum)
      *
-     * @param email
+     * @param phone
      */
-    @Update("update user set qnum = qnum + 1 where email = #{email}")
-    void addQnum(String email);
+    @Update("update user set qnum = qnum + 1 where phone = #{phone}")
+    void addQnum(String phone);
 }

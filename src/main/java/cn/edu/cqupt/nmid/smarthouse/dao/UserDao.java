@@ -15,49 +15,55 @@ public interface UserDao {
      * @Param [user]
      * @Date: 10:14 AM 2020/1/11
      */
-    @Insert("insert into user (phone,email,pwd,nickname,borth,sex,photo,family,qnum) values (#{user.phone},#{user.email}," +
-            "#{user.pwd},#{user.nickname},#{user.borth},#{user.sex},#{user.photo},#{user.family},#{user.qnum})")
+    @Insert("insert into user (phone,pwd,nickname,borth,sex,photo,family) values (#{user.phone}," +
+            "#{user.pwd},#{user.nickname},#{user.borth},#{user.sex},#{user.photo},#{user.family})")
     void register(@Param("user") User user);
 
-    @Insert("INSERT INTO user_info(email,temperature,moisture,height,weight,b_Temperature," +
-            "b_Sugar,b_Oxygen,h_Rate,n_Measure) VALUES (#{user.email}, 0, 0, '', '', '', '', '', '', '')")
+    @Insert("INSERT INTO user_info(phone,temperature,moisture,height,weight,b_Temperature," +
+            "b_Sugar,b_Oxygen,h_Rate,n_Measure) VALUES (#{user.phone}, 0, 0, '', '', '', '', '', '', '')")
     void register2(@Param("user") User user);
 
     /**
      * @Description:用户登陆
-     * @Param [email, pwd]用户名，密码
+     * @Param [phone, pwd]用户名，密码
      * @Date: 10:42 AM 2020/1/11
      */
-    @Select("select phone,email,pwd,nickname,borth,sex,photo,family,qnum from user where email=#{email} and pwd=#{pwd}")
-    User login(@Param("email") String email, @Param("pwd") String pwd);
+    @Select("select phone,pwd,nickname,borth,sex,photo,family from user where phone=#{phone} and pwd=#{pwd}")
+    User login(@Param("phone") String phone, @Param("pwd") String pwd);
 
     /**
      * @Description:修改名称、 密码、 头像
      * @Param [user]
      * @Date: 6:30 PM 2020/1/11
      */
-    @Update("update user set nickname=#{user.nickname} where email=#{user.email}")
+    @Update("update user set nickname=#{user.nickname} where phone=#{user.phone}")
     void modNickname(@Param("user") User user);
 
-    @Update("update user set pwd=#{user.pwd} where email=#{user.email}")
+    @Update("update user set pwd=#{user.pwd} where phone=#{user.phone}")
     void modPwd(@Param("user") User user);
 
-    @Update("update user set photo=#{user.photo} where email=#{user.email}")
+    @Update("update user set photo=#{user.photo} where phone=#{user.phone}")
     void modHead(@Param("user") User user);
 
-    @Select("select email from user where email=#{email}")
-    String ifExit(String email);
+    @Select("select phone from user where phone=#{phone}")
+    String ifExit(String phone);
 
 
     /**
      * 修改 生日、 性别、 电话
      */
-    @Update("update user set borth=#{borth} where email=#{email}")
-    void modBorth(String borth, String email);
+    @Update("update user set borth=#{borth} where phone=#{phone}")
+    void modBorth(@Param("borth") String borth, @Param("phone") String phone);
 
-    @Update("update user set sex=#{sex} where email=#{email}")
-    void modSex(String sex, String email);
+    @Update("update user set sex=#{sex} where phone=#{phone}")
+    void modSex(@Param("sex") String sex, @Param("phone") String phone);
 
-    @Update("update user set phone=#{phone} where email=#{email}")
-    void modPhone(String phone, String email);
+    /**
+     * 将phone2 修改成phone1
+     *
+     * @param phone1
+     * @param phone2
+     */
+    @Update("update user set phone=#{phone1} where phone=#{phone2}")
+    void modPhone(@Param("phone1") String phone1, @Param("phone2") String phone2);
 }

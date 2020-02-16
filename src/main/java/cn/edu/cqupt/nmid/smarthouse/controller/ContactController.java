@@ -55,7 +55,7 @@ public class ContactController {
         UserInfo userInfo;
         try {
             User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
-            userInfo = commonService.getInfo(user.getEmail());
+            userInfo = commonService.getInfo(user.getPhone());
             returnData.put("info", userInfo);
         } catch (Exception e) {
             returnData.put("info", null);
@@ -79,7 +79,7 @@ public class ContactController {
         int status = 200;
         User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
         try {
-            commonService.updateInfo(userInfo, user.getEmail());
+            commonService.updateInfo(userInfo, user.getPhone());
         } catch (Exception e) {
             status = 400;
             e.printStackTrace();
@@ -117,7 +117,7 @@ public class ContactController {
         int status = 200;
         try {
             User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
-            commonService.addQnum(user.getEmail());
+            commonService.addQnum(user.getPhone());
         } catch (Exception e) {
             status = 400;
             e.printStackTrace();
@@ -143,8 +143,8 @@ public class ContactController {
         int status = 200;
         try {
             User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
-            String email = user.getEmail();
-            commonService.addPlan(time, thing, email);
+            String phone = user.getPhone();
+            commonService.addPlan(time, thing, phone);
         } catch (Exception e) {
             status = 400;
             e.printStackTrace();
@@ -161,8 +161,8 @@ public class ContactController {
         List<Plan> plans = null;
         try {
             User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
-            String email = user.getEmail();
-            plans = commonService.getPlans(email);
+            String phone = user.getPhone();
+            plans = commonService.getPlans(phone);
         } catch (Exception e) {
             status = 400;
             e.printStackTrace();

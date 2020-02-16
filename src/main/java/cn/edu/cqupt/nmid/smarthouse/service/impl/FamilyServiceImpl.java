@@ -26,12 +26,10 @@ public class FamilyServiceImpl implements FamilyService {
     @Resource
     private CommonDao commonDao;
 
-    @Autowired
-
 
     @Override
     public List<User> getFamily(User user) {
-        String[] familylis = this.getList(user.getEmail());
+        String[] familylis = this.getList(user.getPhone());
         List<User> family = new LinkedList<>();
         try {
             //3.查询出的单个user添加进list
@@ -44,9 +42,9 @@ public class FamilyServiceImpl implements FamilyService {
         return family;
     }
 
-    private String[] getList(String email) {
+    private String[] getList(String phone) {
         //1.获取家人列表
-        String list = familyDao.getFamilyList(email);
+        String list = familyDao.getFamilyList(phone);
         String[] familylis = null;
         //2.分割list
         if (list != null) {
@@ -59,18 +57,18 @@ public class FamilyServiceImpl implements FamilyService {
 
 
     @Override
-    public UserInfo getFamilyUserInfo(String email) {
-        return commonDao.getInfo(email);
+    public UserInfo getFamilyUserInfo(String phone) {
+        return commonDao.getInfo(phone);
     }
 
     @Override
-    public Boolean isFamily(String email1, String email2) {
-        return familyDao.isFamily(email1, email2);
+    public Boolean isFamily(String phone1, String phone2) {
+        return familyDao.isFamily(phone1, phone2);
     }
 
     @Override
-    public User getFamilyUser(String email) {
-        return familyDao.getFamilyUser(email);
+    public User getFamilyUser(String phone) {
+        return familyDao.getFamilyUser(phone);
     }
 
     @Override
@@ -83,21 +81,21 @@ public class FamilyServiceImpl implements FamilyService {
 
     @Override
     @Transactional
-    public void addFamily(User user, String email) {
+    public void addFamily(User user, String phone) {
         //用 ";" 做分割
-        familyDao.addFamily(user, email + ";");
+        familyDao.addFamily(user, phone + ";");
     }
 
     @Override
     @Transactional
-    public void delFamily(User user, String email) {
-        familyDao.delFamily(user, email + ";");
+    public void delFamily(User user, String phone) {
+        familyDao.delFamily(user, phone + ";");
     }
 
     @Override
-    public void sendFamilies(String email) {
-        String[] list = this.getList(email);
-        这里发送信息
+    public void sendFamilies(String phone) {
+        String[] list = this.getList(phone);
+
     }
 
 

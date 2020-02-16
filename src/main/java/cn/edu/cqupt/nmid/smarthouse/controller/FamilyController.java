@@ -65,19 +65,19 @@ public class FamilyController {
 
     /**
      * @Description: 点击单个家人获取该家人测得的信息
-     * @Param email
+     * @Param phone
      * @Date: 4:34 PM 2020/1/15
      */
     @ApiOperation("点击单个家人获取该家人测得的信息")
     @GetMapping("/family/getFamilyUser")
-    public String getFamilyUesr(@RequestParam String email, @RequestParam String JSESSIONID) {
+    public String getFamilyUesr(@RequestParam String phone, @RequestParam String JSESSIONID) {
         JSONObject returnData = new JSONObject();
         int status = 200;
         UserInfo userInfo = null;
         try {
             User user = (User) loginSessionContext.getSession("JSESSIONID").getAttribute("user");
-            if (familyService.isFamily(email, user.getEmail())) {
-                userInfo = familyService.getFamilyUserInfo(email);
+            if (familyService.isFamily(phone, user.getPhone())) {
+                userInfo = familyService.getFamilyUserInfo(phone);
             } else {
                 //没有该家人 【安全操作】
                 status = 400;
@@ -93,28 +93,27 @@ public class FamilyController {
 
     /**
      * @Description: 添加家人
-     * @Param email phone borth
+     * @Param phone phone borth
      * @Date: 5:25 PM 2020/1/15
      */
     @ApiOperation("添加家人")
     @PostMapping("/family/addFamily")
-    public String addFamily(@RequestParam String email,
-                            @RequestParam String phone,
+    public String addFamily(@RequestParam String phone,
                             @RequestParam String borth,
                             @RequestParam String JSESSIONID) {
         JSONObject returnData = new JSONObject();
         int status = 200;
         try {
             User user = (User) loginSessionContext.getSession("JSESSIONID").getAttribute("user");
-            User user1 = familyService.getFamilyUser(user.getEmail());
+            User user1 = familyService.getFamilyUser(user.getPhone());
             //1.判断如果家人列表中已有或添加本人，返回400
-            if (familyService.isFamily(email, user.getFamily()) || email.equals(user.getEmail())) {
+            if (familyService.isFamily(phone, user.getFamily()) || phone.equals(user.getPhone())) {
                 status = 400;
             } else {
                 //2.判断是否符合需添加家人的信息,即输入的信息正确
                 if (familyService.checkAdd(user1, phone, borth)) {
                     //3.添加家人
-                    familyService.addFamily(user, email);
+                    familyService.addFamily(user, phone);
                 } else {
                     status = 400;
                 }
@@ -129,21 +128,21 @@ public class FamilyController {
 
     /**
      * @Description: 删除指定家人
-     * @Param email 要删除的家人的email
+     * @Param phone 要删除的家人的phone
      * @Date: 10:39 PM 2020/1/15
      */
     @ApiOperation("删除指定家人")
     @GetMapping("/family/delFamily")
-    public String delFamily(@RequestParam String email, @RequestParam String JSESSIONID) {
+    public String delFamily(@RequestParam String phone, @RequestParam String JSESSIONID) {
         JSONObject returnData = new JSONObject();
         int status = 400;
         try {
             User user = (User) loginSessionContext.getSession("JSESSIONID").getAttribute("user");
             //1.判断如果家人列表中没有，返回400
-            if (!familyService.isFamily(email, user.getFamily())) {
+            if (!familyService.isFamily(phone, user.getFamily())) {
                 status = 400;
             } else {
-                familyService.delFamily(user, email);
+                familyService.delFamily(user, phone);
             }
         } catch (Exception e) {
             status = 400;

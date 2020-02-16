@@ -18,17 +18,17 @@ public interface CommonService {
     /**
      * 得到用户测得的数据
      *
-     * @param email
+     * @param phone
      * @return
      */
-    UserInfo getInfo(String email);
+    UserInfo getInfo(String phone);
 
     /**
      * 更新用户测得的数据
      *
      * @param userInfo
      */
-    void updateInfo(UserInfo userInfo, String email);
+    void updateInfo(UserInfo userInfo, String phone);
 
     /**
      * 获得所有题目及答案
@@ -40,9 +40,9 @@ public interface CommonService {
     /**
      * 用户答题正确，答题正确数目加一
      *
-     * @param email
+     * @param phone
      */
-    void addQnum(String email);
+    void addQnum(String phone);
 
     /**
      * 添加任务
@@ -50,15 +50,15 @@ public interface CommonService {
      * @param time
      * @param thing
      */
-    void addPlan(String time, String thing, String email);
+    void addPlan(String time, String thing, String phone);
 
     /**
      * 查询任务
      *
-     * @param email
+     * @param phone
      * @return
      */
-    List<Plan> getPlans(String email);
+    List<Plan> getPlans(String phone);
 
     /**
      * 删除任务

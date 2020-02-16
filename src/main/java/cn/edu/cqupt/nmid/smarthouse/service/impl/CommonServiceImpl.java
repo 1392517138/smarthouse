@@ -34,15 +34,15 @@ public class CommonServiceImpl implements CommonService {
     PlanDao planDao;
 
     @Override
-    public UserInfo getInfo(String email) {
-        return commonDao.getInfo(email);
+    public UserInfo getInfo(String phone) {
+        return commonDao.getInfo(phone);
     }
 
     @Override
     @Transactional
-    public void updateInfo(UserInfo userInfo, String email) {
+    public void updateInfo(UserInfo userInfo, String phone) {
         //1.获取原本的userInfo
-        UserInfo userInfo1 = commonDao.getInfo(email);
+        UserInfo userInfo1 = commonDao.getInfo(phone);
         //身高、体重、血压、血氧、心率、测量次数分别添加上时间
         userInfo.setHeight(userInfo.getHeight() + ":" + ft.format(date) + ";");
         userInfo.setWeight(userInfo.getWeight() + ":" + ft.format(date) + ";");
@@ -52,7 +52,7 @@ public class CommonServiceImpl implements CommonService {
         userInfo.setHrate(userInfo.getHrate() + ":" + ft2.format(date) + ";");
         userInfo.setNmeasure((String.valueOf(userInfo.getNmeasure()) + 1) + ":" + ft2.format(date) + ";");
 
-        commonDao.updateInfo(userInfo, email);
+        commonDao.updateInfo(userInfo, phone);
     }
 
     /***********************************************************************/
@@ -64,8 +64,8 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     @Transactional
-    public void addQnum(String email) {
-        knowledgeDao.addQnum(email);
+    public void addQnum(String phone) {
+        knowledgeDao.addQnum(phone);
     }
 
 
@@ -74,13 +74,13 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     @Transactional
-    public void addPlan(String time, String thing, String email) {
-        planDao.addPlan(time, thing, email);
+    public void addPlan(String time, String thing, String phone) {
+        planDao.addPlan(time, thing, phone);
     }
 
     @Override
-    public List<Plan> getPlans(String email) {
-        List<Plan> plans = planDao.getPlans(email);
+    public List<Plan> getPlans(String phone) {
+        List<Plan> plans = planDao.getPlans(phone);
         return plans;
     }
 

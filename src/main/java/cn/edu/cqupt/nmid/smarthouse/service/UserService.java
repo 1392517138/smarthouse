@@ -21,11 +21,11 @@ public interface UserService {
     /**
      * 用户登陆
      *
-     * @param email
+     * @param phone
      * @param pwd
      * @return
      */
-    User login(String email, String pwd);
+    User login(String phone, String pwd);
 
     /**
      * 修改用户名称 、 密码 、 头像 、
@@ -41,19 +41,19 @@ public interface UserService {
     /**
      * 是否存在该用户
      *
-     * @param email
+     * @param phone
      * @return
      */
-    Boolean ifExit(String email);
+    Boolean ifExit(String phone);
 
     /**
      * 修改生日、 性别、 电话
      */
-    void modBorth(String borth, String email);
+    void modBorth(String borth, String phone);
 
-    void modSex(String sex, String email);
+    void modSex(String sex, String phone);
 
-    void modPhone(String phone, String email);
+    void modPhone(String phone1, String phone2);
 
 
 }

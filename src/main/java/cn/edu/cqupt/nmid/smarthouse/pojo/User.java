@@ -17,8 +17,6 @@ import lombok.Data;
 public class User {
     @ApiModelProperty("电话号码")
     private String phone;
-    @ApiModelProperty("邮箱")
-    private String email;
     @ApiModelProperty("密码")
     private String pwd;
     @ApiModelProperty(value = "别名", example = "小明")
@@ -31,7 +29,6 @@ public class User {
     private String photo;
     @ApiModelProperty("家庭成员")
     private String family;
-    @ApiModelProperty("答题正确题数")
-    private Integer qnum;
+
 
 }
