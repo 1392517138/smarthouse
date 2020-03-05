@@ -16,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -194,6 +197,27 @@ public class UserController {
         return returnData.toJSONString();
     }
 
+
+    @PostMapping(value = "/uploadFiles")
+    public String fileImgSave(@RequestParam("files") MultipartFile[] files) throws IOException {
+        //保存文件的路径
+
+        if (files != null && files.length > 0) {
+            for (int i = 0; i < files.length; i++) {
+                String filename = files[i].getOriginalFilename();
+
+                files[i].transferTo(new File("/Users/piwenjing/Desktop/hhh", filename));
+
+            }
+        } else {
+            System.out.println("files是空的");
+        }
+        return "阿斯顿发kkkkkkkk";
+    }
+
+    /**
+     *
+     */
     @ApiOperation("修改密码")
     @GetMapping("/modPwd")
     public String modHead(@RequestParam String pwd, @RequestParam String JSESSIONID) {

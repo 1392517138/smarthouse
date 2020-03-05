@@ -7,6 +7,7 @@ import cn.edu.cqupt.nmid.smarthouse.util.LoginSessionContext;
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,25 +99,31 @@ public class FamilyController {
      */
     @ApiOperation("添加家人")
     @PostMapping("/family/addFamily")
-    public String addFamily(@RequestParam String phone,
-                            @RequestParam String borth,
+    public String addFamily(@ApiParam("你要添加的人的电话") @RequestParam("phone") String phone,
                             @RequestParam String JSESSIONID) {
         JSONObject returnData = new JSONObject();
         int status = 200;
         try {
-            User user = (User) loginSessionContext.getSession("JSESSIONID").getAttribute("user");
+            User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
             User user1 = familyService.getFamilyUser(user.getPhone());
+//            //1.判断如果家人列表中已有或添加本人，返回400
+//            if (familyService.isFamily(phone, user.getFamily()) || phone.equals(user.getPhone())) {
+//                status = 400;
+//            } else {
+//                //2.判断是否符合需添加家人的信息,即输入的信息正确
+//                if (familyService.checkAdd(user1, phone, borth)) {
+//                    //3.添加家人
+//                    familyService.addFamily(user, phone);
+//                } else {
+//                    status = 400;
+//                }
+//            }
             //1.判断如果家人列表中已有或添加本人，返回400
-            if (familyService.isFamily(phone, user.getFamily()) || phone.equals(user.getPhone())) {
+            if (familyService.isFamily(phone, user.getPhone()) || phone.equals(user.getPhone())) {
                 status = 400;
             } else {
-                //2.判断是否符合需添加家人的信息,即输入的信息正确
-                if (familyService.checkAdd(user1, phone, borth)) {
-                    //3.添加家人
+                //2.添加家人
                     familyService.addFamily(user, phone);
-                } else {
-                    status = 400;
-                }
             }
         } catch (Exception e) {
             status = 400;
@@ -137,7 +144,7 @@ public class FamilyController {
         JSONObject returnData = new JSONObject();
         int status = 400;
         try {
-            User user = (User) loginSessionContext.getSession("JSESSIONID").getAttribute("user");
+            User user = (User) loginSessionContext.getSession(JSESSIONID).getAttribute("user");
             //1.判断如果家人列表中没有，返回400
             if (!familyService.isFamily(phone, user.getFamily())) {
                 status = 400;
